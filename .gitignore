@@ -1,0 +1,18 @@
+
+# Environnement Python
+.venv/
+__pycache__/
+
+# Secrets : ne jamais les mettre sur GitHub mot de passe des base des données, clés API, etc.
+.env
+
+# Fichiers générés par dbt
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+
+# Fichiers générés par Airflow
+airflow/logs/
+
+# Fichiers système macOS
+.DS_Store
