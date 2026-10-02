@@ -1,0 +1,17 @@
+services:
+
+  source_db:
+    image: postgres:16
+    container_name: modashop_source
+    environment:
+      POSTGRES_USER: ${SOURCE_DB_USER}
+      POSTGRES_PASSWORD: ${SOURCE_DB_PASSWORD}
+      POSTGRES_DB: ${SOURCE_DB_NAME}
+    ports:
+      - "5433:5432"
+    volumes:
+      - source_data:/var/lib/postgresql/data
+      - ./source/init:/docker-entrypoint-initdb.d
+
+volumes:
+  source_data:
