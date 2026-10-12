@@ -13,5 +13,20 @@ services:
       - source_data:/var/lib/postgresql/data
       - ./source/init:/docker-entrypoint-initdb.d
 
+  entrepot_db:
+    image: postgres:16
+    container_name: modashop_entrepot
+    environment:
+      POSTGRES_USER: ${ENTREPOT_DB_USER}
+      POSTGRES_PASSWORD: ${ENTREPOT_DB_PASSWORD}
+      POSTGRES_DB: ${ENTREPOT_DB_NAME}
+    ports:
+      - "5434:5432"
+    volumes:
+      - entrepot_data:/var/lib/postgresql/data
+      - ./entrepot/init:/docker-entrypoint-initdb.d
+      
+
 volumes:
   source_data:
+  entrepot_data:
