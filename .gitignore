@@ -16,3 +16,9 @@ airflow/logs/
 
 # Fichiers système macOS
 .DS_Store
+
+# Fichiers générés par dbt
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+dbt/.user.yml

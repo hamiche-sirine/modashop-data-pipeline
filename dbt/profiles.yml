@@ -1,0 +1,12 @@
+modashop:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: localhost
+      port: 5434
+      user: "{{ env_var('ENTREPOT_DB_USER') }}"
+      password: "{{ env_var('ENTREPOT_DB_PASSWORD') }}"
+      dbname: "{{ env_var('ENTREPOT_DB_NAME') }}"
+      schema: silver
+      threads: 4
