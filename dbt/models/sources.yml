@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: "Copie brute des sources, remplie par les scripts Python d'ingestion"
+    schema: bronze
+    tables:
+      - name: clients
+        description: "Clients du site (incrémental : plusieurs versions possibles par client)"
+      - name: produits
+        description: "Catalogue des produits (incrémental)"
+      - name: commandes
+        description: "Commandes du site (incrémental : plusieurs versions possibles par commande)"
+      - name: lignes_commande
+        description: "Articles de chaque commande (chargement complet)"
+      - name: paiements
+        description: "Paiements du prestataire, un objet JSON par ligne"
