@@ -1,0 +1,9 @@
+{
+  "date_export": "2026-10-12",
+  "paiements": [
+    {"id_paiement": "P005", "id_commande": 7, "montant": "75,00", "moyen": "carte", "statut": "rembourse"},
+    {"id_paiement": "P006", "id_commande": 10, "montant": "134,90", "moyen": "carte", "statut": "accepte"},
+    {"id_paiement": "P007", "id_commande": 13, "montant": "abc", "moyen": "paypal", "statut": "accepte"},
+    {"id_paiement": "P008", "id_commande": 14, "montant": "89,90", "moyen": "carte"}
+  ]
+}
