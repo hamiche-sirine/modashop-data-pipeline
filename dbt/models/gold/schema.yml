@@ -1,0 +1,70 @@
+version: 2
+
+models:
+
+  # ---------- Dimensions ----------
+  - name: dim_client
+    description: "Dimension client : une ligne = un client"
+    columns:
+      - name: id_client
+        data_tests:
+          - unique
+          - not_null
+
+  - name: dim_produit
+    description: "Dimension produit : une ligne = un produit"
+    columns:
+      - name: id_produit
+        data_tests:
+          - unique
+          - not_null
+      - name: gamme_prix
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['ENTREE DE GAMME', 'MILIEU DE GAMME', 'HAUT DE GAMME']
+
+  - name: dim_date
+    description: "Dimension date (calendrier) : une ligne = un jour"
+    columns:
+      - name: date_jour
+        data_tests:
+          - unique
+          - not_null
+
+  # ---------- Table de faits ----------
+  - name: fait_ventes
+    description: "Faits de vente : une ligne = un produit acheté dans une commande"
+    columns:
+      - name: id_ligne
+        data_tests:
+          - unique
+          - not_null
+
+      - name: id_client
+        data_tests:
+          - not_null                      # attrape les lignes orphelines du left join
+          - relationships:
+              arguments:
+                to: ref('dim_client')
+                field: id_client
+
+      - name: id_produit
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_produit')
+                field: id_produit
+
+      - name: date_commande
+        data_tests:
+          - not_null
+          - relationships:                # chaque vente doit tomber dans le calendrier
+              arguments:
+                to: ref('dim_date')
+                field: date_jour
+
+      - name: montant_ca
+        data_tests:
+          - not_null
