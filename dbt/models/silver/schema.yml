@@ -1,0 +1,92 @@
+version: 2
+
+models:
+
+  - name: stg_clients
+    description: "Clients nettoyés, une ligne par client"
+    columns:
+      - name: id_client
+        data_tests:
+          - unique
+          - not_null
+      - name: email
+        data_tests:
+          - unique
+      - name: region
+        data_tests:
+          - not_null
+
+  - name: stg_commandes
+    description: "Commandes nettoyées, une ligne par commande (version la plus récente)"
+    columns:
+      - name: id_commande
+        data_tests:
+          - unique
+          - not_null
+      - name: id_client
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_clients')
+                field: id_client
+      - name: statut
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['PAYEE', 'ANNULEE', 'REMBOURSEE', 'EN_ATTENTE']
+
+  - name: stg_produits
+    description: "Produits nettoyés, une ligne par produit"
+    columns:
+      - name: id_produit
+        data_tests:
+          - unique
+          - not_null
+      - name: prix
+        data_tests:
+          - not_null
+
+  - name: stg_lignes_commande
+    description: "Articles commandés, une ligne par article"
+    columns:
+      - name: id_ligne
+        data_tests:
+          - unique
+          - not_null
+      - name: id_commande
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_commandes')
+                field: id_commande
+      - name: id_produit
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_produits')
+                field: id_produit
+
+  - name: stg_paiements
+    description: "Paiements du prestataire, nettoyés"
+    columns:
+      - name: id_paiement
+        data_tests:
+          - unique
+          - not_null
+      - name: id_commande
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_commandes')
+                field: id_commande
+      - name: montant
+        data_tests:
+          - not_null:
+              config:
+                severity: warn
+      - name: statut
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['ACCEPTE', 'REFUSE', 'REMBOURSE', 'INCONNU']
